@@ -1,8 +1,50 @@
+export type ApplicationStatus = 'Saved' | 'Documents Pending' | 'Applied' | 'Submitted'
+export type EligibilityStatus = 'Eligible' | 'Maybe' | 'Not eligible'
+export interface Scholarship {
+  id: string
+  name: string
+  provider: string
+  portal: string
+  amount: number
+  amountText: string
+  deadline: string
+  level: string
+  category: string
+  incomeLimit: number
+  minPercentage: number
+  states: string[]
+  course: string
+  description: string
+  benefits: string[]
+  documents: string[]
+  steps: string[]
+}
+export interface Profile {
+  level: string
+  course: string
+  income: string
+  state: string
+  category: string
+  percentage: string
+}
+export interface Application {
+  id: string
+  status: ApplicationStatus
+  updated: string
+}
+export interface EligibilityResult {
+  scholarship: Scholarship
+  score: number
+  status: EligibilityStatus
+  reasons: string[]
+}
+export type View = 'discover' | 'eligibility' | 'tracker' | 'documents'
+
 // 14 real Indian scholarships. Amounts and portals are the public figures
 // listed for the 2026-27 cycle. Deadlines are the cycle dates used in the
 // demo data set. Always verify a deadline on the official portal before
 // applying, because portals update dates during the cycle.
-export const SCHOLARSHIPS = [
+export const SCHOLARSHIPS: Scholarship[] = [
   {
     id: 'nsp-postmatric',
     name: 'NSP Post-Matric Scholarship',
@@ -271,7 +313,7 @@ export const SCHOLARSHIPS = [
   },
 ]
 
-export const DOCUMENT_CHECKLIST = [
+export const DOCUMENT_CHECKLIST: string[] = [
   'Aadhaar card',
   'Aadhaar-linked mobile number',
   'Income certificate',
@@ -286,14 +328,14 @@ export const DOCUMENT_CHECKLIST = [
   'One Time Registration (OTR) number',
 ]
 
-export function daysLeft(deadline) {
+export function daysLeft(deadline: string): number {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const end = new Date(deadline + 'T00:00:00')
-  return Math.ceil((end - today) / (1000 * 60 * 60 * 24))
+  return Math.ceil((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
 }
 
-export function formatDate(dateString) {
+export function formatDate(dateString: string): string {
   return new Date(dateString + 'T00:00:00').toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'short',

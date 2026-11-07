@@ -1,4 +1,4 @@
-export const INDIAN_STATES = [
+export const INDIAN_STATES: string[] = [
   'Andhra Pradesh',
   'Arunachal Pradesh',
   'Assam',
@@ -29,7 +29,7 @@ export const INDIAN_STATES = [
   'West Bengal',
 ]
 
-export const INDIAN_UTS = [
+export const INDIAN_UTS: string[] = [
   'Andaman and Nicobar Islands',
   'Chandigarh',
   'Dadra and Nagar Haveli and Daman and Diu',
@@ -40,9 +40,10 @@ export const INDIAN_UTS = [
   'Puducherry',
 ]
 
-export const ALL_STATES_AND_UTS = [...INDIAN_STATES, ...INDIAN_UTS]
+export const ALL_STATES_AND_UTS: string[] = [...INDIAN_STATES, ...INDIAN_UTS]
 
-export const INCOME_OPTIONS = [
+export interface IncomeOption { value: string; label: string }
+export const INCOME_OPTIONS: IncomeOption[] = [
   { value: '', label: 'Any income' },
   { value: '2', label: 'Below Rs. 2 lakh' },
   { value: '3.5', label: 'Below Rs. 3.5 lakh' },

@@ -13,6 +13,7 @@ interface ScholarshipCardProps {
 }
 
 export default function ScholarshipCard({ scholarship, saved, compareSelected, compareFull, onSelect, onToggleSave, onTrack, onToggleCompare }: ScholarshipCardProps) {
+  const days = daysLeft(scholarship.deadline)
   return (
     <article className="card">
       <p className="provider">{scholarship.provider}</p>
@@ -21,7 +22,7 @@ export default function ScholarshipCard({ scholarship, saved, compareSelected, c
       <p>{scholarship.description}</p>
       <p className="meta">Level: {scholarship.level} | {scholarship.category} | Open in: {scholarship.states.join(', ')}</p>
       <p className="meta">Income limit: Rs. {scholarship.incomeLimit} lakh | Minimum: {scholarship.minPercentage}%</p>
-      <p className="deadline">{daysLeft(scholarship.deadline)} days left, deadline {formatDate(scholarship.deadline)}</p>
+      <p className={days <= 30 ? 'deadline deadline-urgent' : 'deadline'}>{days} days left, deadline {formatDate(scholarship.deadline)}</p>
       <div className="actions">
         <button className="btn primary" type="button" onClick={() => onSelect(scholarship)}>View details</button>
         <button className="btn" type="button" aria-pressed={saved} onClick={() => onToggleSave(scholarship.id)}>{saved ? 'Saved' : 'Save'}</button>

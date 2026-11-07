@@ -38,7 +38,7 @@ export interface EligibilityResult {
   status: EligibilityStatus
   reasons: string[]
 }
-export type View = 'discover' | 'eligibility' | 'tracker' | 'documents'
+export type View = 'discover' | 'eligibility' | 'tracker' | 'documents' | 'compare'
 
 // 14 real Indian scholarships. Amounts and portals are the public figures
 // listed for the 2026-27 cycle. Deadlines are the cycle dates used in the

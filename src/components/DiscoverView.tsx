@@ -20,13 +20,15 @@ interface DiscoverViewProps {
   levels: string[]
   categories: string[]
   saved: string[]
+  compareIds: string[]
   onSelect: (scholarship: Scholarship) => void
   onToggleSave: (id: string) => void
   onTrack: (id: string) => void
+  onToggleCompare: (id: string) => void
 }
 
 export default function DiscoverView(props: DiscoverViewProps) {
-  const { search, onSearchChange, level, onLevelChange, category, onCategoryChange, income, onIncomeChange, state, onStateChange, sort, onSortChange, filtered, levels, categories, saved, onSelect, onToggleSave, onTrack } = props
+  const { search, onSearchChange, level, onLevelChange, category, onCategoryChange, income, onIncomeChange, state, onStateChange, sort, onSortChange, filtered, levels, categories, saved, compareIds, onSelect, onToggleSave, onTrack, onToggleCompare } = props
   return (
     <main id="main-content">
       <h1>Discover scholarships</h1>
@@ -42,10 +44,15 @@ export default function DiscoverView(props: DiscoverViewProps) {
       <p className="count" aria-live="polite">Showing {filtered.length} of {SCHOLARSHIPS.length} scholarships</p>
       <div className="grid">
         {filtered.map((s) => (
-          <ScholarshipCard key={s.id} scholarship={s} saved={saved.includes(s.id)} onSelect={onSelect} onToggleSave={onToggleSave} onTrack={onTrack} />
+          <ScholarshipCard key={s.id} scholarship={s} saved={saved.includes(s.id)} compareSelected={compareIds.includes(s.id)} compareFull={compareIds.length >= 3} onSelect={onSelect} onToggleSave={onToggleSave} onTrack={onTrack} onToggleCompare={onToggleCompare} />
         ))}
       </div>
-      {filtered.length === 0 && <p>No scholarships match these filters. Clear the search or choose a wider income or state.</p>}
+      {filtered.length === 0 && (
+        <div className="empty-state" role="status">
+          <h2>No scholarships match these filters</h2>
+          <p>Clear the search or choose a wider income or state to see more scholarships.</p>
+        </div>
+      )}
     </main>
   )
 }

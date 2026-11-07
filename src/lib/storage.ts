@@ -8,5 +8,6 @@ export function load<T>(key: string, fallback: T): T {
 }
 
 export function save(key: string, value: unknown): void {
+  if (typeof localStorage === 'undefined') return
   localStorage.setItem(key, JSON.stringify(value))
 }

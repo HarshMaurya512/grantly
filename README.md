@@ -6,6 +6,46 @@ Built for THE OUTPOST, Frontend Arena, 7 Nov 2026. Solo build by Harsh Maurya.
 Live: https://grantly-iota.vercel.app
 Repo: https://github.com/HarshMaurya512/grantly
 
+## Attempt 3 / v3 changes
+
+Attempt 1 scored 67.12/100, rank 25, with a full FAIE breakdown. The
+biggest losses were UI/UX and Responsiveness 35.7% (7.14/20), Code Quality
+and Architecture 34.8% (3.48/10), and the FQE Architecture Engine 0.50/6.
+Attempt 2 (TypeScript strict, split components, ESLint, Vitest, security
+headers, accessibility) was pushed to GitHub as commit c2e8d31 but not
+submitted. v3 builds on top of it and targets the Attempt 1 breakdown,
+with no change to the 14 scholarships, their amounts, deadlines, filters,
+eligibility logic, tracker behaviour, documents checklist, or the navy
+and teal design.
+
+- Responsive and UI/UX: breakpoints at 1024px, 760px, 560px and 400px in
+  `src/index.css`. Stats grid 4 to 2 to 1 columns, filters 3 to 2 to 1,
+  scholarship grid 2 to 1, topbar stacks on mobile, modal padding shrinks
+  on small screens. Fluid typography with `clamp()` for the logo and `h1`,
+  44px minimum touch targets on buttons, selects and inputs on mobile.
+  Hover and focus transitions for cards, buttons and nav. A styled
+  empty-state box replaces the plain text for zero filtered results.
+- Architecture and performance: `React.lazy` plus `Suspense` for
+  Discover, Eligibility Check, Tracker, Documents, Scholarship Detail and
+  Compare, with a loading fallback. `src/hooks/useLocalStorage.ts`
+  extracts the load and save pattern used for saved, applications, docs
+  and compare state. Filtering and sorting moved out of `App.tsx` into
+  the pure typed `src/lib/filterScholarships.ts`, covered by unit tests.
+  `vite.config.js` adds a `vendor` manual chunk for react and react-dom.
+  Added `public/favicon.svg` (navy square, white G) and a theme-color
+  meta tag in `index.html`.
+- Innovation: compare up to 3 scholarships. A Compare button on each
+  scholarship card, a compare bar showing the selected count, and a
+  Compare view with a side by side table for amount, deadline, level,
+  category, income limit, minimum percentage, provider and open states,
+  with remove and clear. Selection logic is the typed
+  `src/lib/compare.ts` (capped at 3), covered by unit tests. Tests grew
+  from 17 to 27: 8 new filter and sort tests and 2 new compare tests in
+  `src/lib/filterScholarships.test.ts`.
+- Documentation: new `ARCHITECTURE.md` (component tree, data flow, state
+  and localStorage keys, lazy loading, responsive breakpoints, security
+  headers) and this section in the README.
+
 ## Attempt 2 changes
 
 Attempt 1 scored 67.12/100, rank 21, with no category breakdown. Attempt 2 targets the published rubric directly, with no change to the 14 scholarships, their amounts, deadlines, filters, eligibility logic, tracker behaviour, or the navy and teal design.
@@ -87,16 +127,24 @@ grantly/
       EligibilityView.tsx
       TrackerView.tsx
       DocumentsView.tsx
+      CompareView.tsx
     data/
       scholarships.ts
       states.ts
+    hooks/
+      useLocalStorage.ts
     lib/
       eligibility.ts
       eligibility.test.ts
       scholarships.test.ts
+      filterScholarships.ts
+      filterScholarships.test.ts
+      compare.ts
       storage.ts
       sanitize.ts
       applicationStatus.ts
+  public/
+    favicon.svg
 ```
 
 ## Note on data

@@ -10,6 +10,7 @@ const NAV_ITEMS: { id: View; label: string }[] = [
   { id: 'eligibility', label: 'Eligibility Check' },
   { id: 'tracker', label: 'My Applications' },
   { id: 'documents', label: 'Documents' },
+  { id: 'compare', label: 'Compare' },
 ]
 
 export default function Header({ view, onViewChange }: HeaderProps) {
